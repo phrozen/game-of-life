@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Go Ebiten WebAssembly</title>
+    <style>
+        body {
+            margin: 0 auto;
+            max-width: 960px;
+            background-color: aliceblue;
+        }
+        nav {
+            margin: 1rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+        button {
+            border: none;
+            background-color: coral;
+            border-radius: 2px;
+            padding: 1rem;
+        }
+        main h1 {
+            margin: 0.25rem 0;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+        }
+        main iframe {
+            overflow: hidden;
+            border: none;
+        }
+        span.click {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        
+        <h1>
+            <span id="title">The Game of Life</span>
+            <span id="fullscreen" class="click" onclick="document.getElementById('ebiten').requestFullscreen()" >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 9h-2v-4h-4v-2h6v6zm-6 12v-2h4v-4h2v6h-6zm-18-6h2v4h4v2h-6v-6zm6-12v2h-4v4h-2v-6h6z"/></svg>
+            </span>
+            <span id="reload" class="click" onclick="document.getElementById('ebiten').contentWindow.location.reload(true)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M22 3v18h-5v-2h3v-14h-6v3l-5.25-4 5.25-4v3h8zm-12 16h-6v-14h3v-2h-5v18h8v3l5.25-4-5.25-4v3z"/></svg>
+            </span>
+        </h1>
+        <iframe  id="ebiten" title="ebiten" scrolling="no" src="loader.html#simple.wasm" width="960" height="540"></iframe>
+        <nav>
+            <button type="button" onclick="load('Game of Life', 'simple.wasm')">Simple</button>
+            <button type="button" onclick="load('Game of Life (color)', 'colorful.wasm')">Colorful</button>
+            <button type="button" onclick="load('Sketch', 'sketch.wasm')">Sketch</button>
+        </nav>
+    </main>
+    <script>
+        function load(title, file) {
+            document.getElementById('title').innerText = title;
+            document.getElementById('ebiten').src = `loader.html#${file}`;
+            document.getElementById('ebiten').contentWindow.location.reload(true);
+        }
+    </script>
+</body>
+</html>
